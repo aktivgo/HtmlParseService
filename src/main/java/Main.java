@@ -51,7 +51,7 @@ public class Main {
         parser.onCompletedList.add(new Completed());
         parser.onNewDataList.add(new NewDataOnlineStore());
 
-        System.out.println("\nЗагрузка началась\n");
+        System.out.println("\nЗагрузка началась\n\n");
         parser.start();
         parser.abort();
     }

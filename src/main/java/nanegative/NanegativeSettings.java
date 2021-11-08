@@ -10,6 +10,6 @@ public class NanegativeSettings extends ParserSettings {
         startPointInside = startPageFeedback;
         endPointInside = endPageFeedback;
         BASE_URL = "https://nanegative.ru/internet-magaziny";
-        PREFIX = "?page={CurrentId}";
+        PREFIX = "page={CurrentId}";
     }
 }

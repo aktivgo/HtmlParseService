@@ -10,7 +10,7 @@ public class HtmlLoader {
     private final String url;
 
     public HtmlLoader() {
-        url = ParserSettings.BASE_URL + "/" + ParserSettings.PREFIX;
+        url = ParserSettings.BASE_URL + "?" + ParserSettings.PREFIX;
     }
 
     public Document GetSource(int id) throws IOException {

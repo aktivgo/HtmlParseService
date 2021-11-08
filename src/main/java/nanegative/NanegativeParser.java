@@ -1,5 +1,6 @@
 package nanegative;
 
+import model.Feedback;
 import model.OnlineStore;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
@@ -21,9 +22,21 @@ public class NanegativeParser implements Parser<ArrayList<OnlineStore>> {
         Elements onlineStoresEl = document.getElementsByClass("find-list-box");
 
         for (Element onlineStoreEl : onlineStoresEl) {
+            String name = onlineStoreEl.getElementsByTag("a").text();
+
             Document onlineStoreDoc = loadOnlineStore(onlineStoreEl);
+            ArrayList<Feedback> feedbacks = new ArrayList<>();
+            Elements feedbacksEl = onlineStoreDoc.getElementsByClass("reviewers-box");
 
+            for (Element feedbackEl : feedbacksEl) {
+                String pros = feedbackEl.getElementsByAttributeValue("itemprop", "pro").text();
+                String cons = feedbackEl.getElementsByAttributeValue("itemprop", "contra").text();
+                String text = feedbackEl.getElementsByAttributeValue("itemprop", "reviewBody").text();
 
+                feedbacks.add(new Feedback(pros, cons, text));
+            }
+
+            onlineStores.add(new OnlineStore(name, feedbacks));
         }
 
         return onlineStores;
