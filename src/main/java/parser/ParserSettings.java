@@ -14,12 +14,6 @@ public abstract class ParserSettings {
     // Конец пагинации
     protected int endPoint;
 
-    // Начало пагинации внутри
-    protected int startPointInside;
-
-    // Конец пагинации внутри
-    protected int endPointInside;
-
     public int getStartPoint() {
         return startPoint;
     }
