@@ -42,11 +42,8 @@ public class Main {
         int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
         int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
 
-        int startPageFeedback = readPagination("Введите начало пагинации отзывов: ");
-        int endPageFeedback = readPagination("Введите конец пагинации отзывов: ");
-
         ParserWorker<ArrayList<OnlineStore>> parser = new ParserWorker<>(new NanegativeParser(),
-                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore, startPageFeedback, endPageFeedback));
+                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore));
 
         parser.onCompletedList.add(new Completed());
         parser.onNewDataList.add(new NewDataOnlineStore());
