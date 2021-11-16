@@ -12,9 +12,6 @@ public class Feedback {
     }
 
     public Feedback(String pros, String cons, String text) {
-        if (pros.isEmpty() || cons.isEmpty() || text.isEmpty()) {
-            throw new NullPointerException("Устанавливаемые значения пустые");
-        }
 
         this.pros = pros;
         this.cons = cons;
@@ -69,6 +66,6 @@ public class Feedback {
 
     @Override
     public String toString() {
-        return "Плюсы: " + pros + "\nМинусы: " + cons + "\nОтзыв: " + text + "\n";
+        return (pros.isEmpty() ? "" : "Плюсы: " + pros) + (cons.isEmpty() ? "" : "\nМинусы: " + cons) + (text.isEmpty() ? "" :"\nОтзыв: " + text) + "\n";
     }
 }

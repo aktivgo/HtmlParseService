@@ -1,4 +1,8 @@
+import leroymerlin.LeroymerlinParser;
+import leroymerlin.LeroymerlinSettings;
+import leroymerlin.NewDataProducts;
 import model.OnlineStore;
+import model.Product;
 import nanegative.NanegativeParser;
 import nanegative.NanegativeSettings;
 import nanegative.NewDataOnlineStores;
@@ -40,21 +44,25 @@ public class Main {
     }
 
     private static void parseNanegative() throws IOException {
-        int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
-        int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
+        try {
+            int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
+            int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
 
-        int startPageFeedback = readPagination("Введите начало пагинации отзывов: ");
-        int endPageFeedback = readPagination("Введите конец пагинации отзывов: ");
+            int startPageFeedback = readPagination("Введите начало пагинации отзывов: ");
+            int endPageFeedback = readPagination("Введите конец пагинации отзывов: ");
 
-        ParserWorker<ArrayList<OnlineStore>> parser = new ParserWorker<>(new NanegativeParser(),
-                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore, startPageFeedback, endPageFeedback));
+            ParserWorker<ArrayList<OnlineStore>> parser = new ParserWorker<>(new NanegativeParser(),
+                    new NanegativeSettings(startPageOnlineStore, endPageOnlineStore, startPageFeedback, endPageFeedback));
 
-        parser.onCompletedList.add(new Completed());
-        parser.onNewDataList.add(new NewDataOnlineStores());
+            parser.onCompletedList.add(new Completed());
+            parser.onNewDataList.add(new NewDataOnlineStores());
 
-        System.out.println("\nЗагрузка началась\n\n");
-        parser.start();
-        parser.abort();
+            System.out.println("\nЗагрузка началась\n\n");
+            parser.start();
+            parser.abort();
+        } catch (Exception e) {
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n");
+        }
     }
 
     private static int readPagination(String message) {
@@ -71,20 +79,23 @@ public class Main {
     }
 
     private static void parseLeroymerlin() throws IOException {
-        int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
-        int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
+        try {
+            System.out.print("Введите категорию товаров транслитом: ");
+            String category = IN.next();
+            int startPage = readPagination("Введите начало пагинации товаров: ");
+            int endPage = readPagination("Введите конец пагинации товаров: ");
 
-        int startPageFeedback = readPagination("Введите начало пагинации отзывов: ");
-        int endPageFeedback = readPagination("Введите конец пагинации отзывов: ");
+            ParserWorker<ArrayList<Product>> parser = new ParserWorker<>(new LeroymerlinParser(),
+                    new LeroymerlinSettings(startPage, endPage, category));
 
-        ParserWorker<ArrayList<OnlineStore>> parser = new ParserWorker<>(new NanegativeParser(),
-                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore, startPageFeedback, endPageFeedback));
+            parser.onCompletedList.add(new Completed());
+            parser.onNewDataList.add(new NewDataProducts());
 
-        parser.onCompletedList.add(new Completed());
-        parser.onNewDataList.add(new NewDataOnlineStores());
-
-        System.out.println("\nЗагрузка началась\n\n");
-        parser.start();
-        parser.abort();
+            System.out.println("\nЗагрузка началась\n\n");
+            parser.start();
+            parser.abort();
+        } catch (Exception e) {
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n");
+        }
     }
 }
