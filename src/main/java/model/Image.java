@@ -1,10 +1,27 @@
 package model;
 
 import org.jetbrains.annotations.NotNull;
+import tools.ImageDownloader;
+
+import java.io.IOException;
 
 public class Image {
     String title = null;
     String url = null;
+
+    public Image() {
+
+    }
+
+    public Image(@NotNull String title, String url) throws IOException {
+        if (title.isEmpty() || url.isEmpty()) {
+            throw new NullPointerException("Устанавливаемые значения пустые");
+        }
+
+        this.title = title;
+        this.url = url;
+        ImageDownloader.download(url);
+    }
 
     public String getTitle() {
         if (title.isEmpty()) {
@@ -36,5 +53,10 @@ public class Image {
         }
 
         this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return title.isEmpty() ? "" : title + "\n" + (url.isEmpty() ? "" : url);
     }
 }

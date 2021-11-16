@@ -43,8 +43,13 @@ public class ParserWorker<T> {
                 onCompletedList.get(0).onCompleted(this);
                 return;
             }
+            Document document;
             HtmlLoader.setUrl(ParserSettings.BASE_URL + ParserSettings.SEPARATOR + ParserSettings.PREFIX);
-            Document document = HtmlLoader.getSourceByPageId(i);
+            if (ParserSettings.PREFIX.equals("q={Query}")) {
+                document = HtmlLoader.getSource();
+            } else {
+                document = HtmlLoader.getSourceByPageId(i);
+            }
             T result = parser.Parse(document, parserSettings);
             onNewDataList.get(0).onNewData(this, result);
         }

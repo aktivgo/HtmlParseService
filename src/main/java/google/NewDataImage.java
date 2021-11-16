@@ -6,7 +6,7 @@ import parser.OnNewDataHandler;
 
 import java.util.ArrayList;
 
-public class NewDataGoogleImage implements OnNewDataHandler<ArrayList<Image>> {
+public class NewDataImage implements OnNewDataHandler<ArrayList<Image>> {
 
     @Override
     public void onNewData(Object sender, @NotNull ArrayList<Image> args) {

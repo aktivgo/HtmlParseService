@@ -1,6 +1,10 @@
+import google.GoogleParser;
+import google.GoogleSettings;
+import google.NewDataImage;
 import leroymerlin.LeroymerlinParser;
 import leroymerlin.LeroymerlinSettings;
 import leroymerlin.NewDataProducts;
+import model.Image;
 import model.OnlineStore;
 import model.Product;
 import nanegative.NanegativeParser;
@@ -31,6 +35,7 @@ public class Main {
                 case 0 -> System.out.println("Пока");
                 case 1 -> parseNanegative();
                 case 2 -> parseLeroymerlin();
+                case 3 -> parseGoogle();
             }
         }
     }
@@ -90,6 +95,25 @@ public class Main {
 
             parser.onCompletedList.add(new Completed());
             parser.onNewDataList.add(new NewDataProducts());
+
+            System.out.println("\nЗагрузка началась\n\n");
+            parser.start();
+            parser.abort();
+        } catch (Exception e) {
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n");
+        }
+    }
+
+    private static void parseGoogle() throws IOException {
+        try {
+            System.out.print("Введите запрос: ");
+            String query = IN.next();
+
+            ParserWorker<ArrayList<Image>> parser = new ParserWorker<>(new GoogleParser(),
+                    new GoogleSettings(query));
+
+            parser.onCompletedList.add(new Completed());
+            parser.onNewDataList.add(new NewDataImage());
 
             System.out.println("\nЗагрузка началась\n\n");
             parser.start();

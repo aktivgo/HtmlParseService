@@ -4,10 +4,13 @@ import parser.ParserSettings;
 
 public class GoogleSettings extends ParserSettings {
 
-    /*public GoogleSettings() {
-        startPoint = 1;
-        endPoint = 1;
+    public GoogleSettings(String query) {
+        externalStartPoint = 1;
+        externalEndPoint = 1;
+        internalStartPoint = 1;
+        internalEndPoint = 1;
         BASE_URL = "https://www.google.ru/search";
-        PREFIX = "?q={Query}";
-    }*/
+        SEPARATOR = "?";
+        PREFIX = "q=" + query;
+    }
 }
