@@ -22,7 +22,7 @@ public abstract class ImageDownloader {
         String imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
         String imageExtension = imageName.substring(imageName.lastIndexOf(".") + 1);
         File output = new File(savePath + imageName);
-        try{
+        try {
             ImageIO.write(input, imageExtension, output);
         } catch (Exception e) {
             System.out.println("Ошибка при сохранении изображения  " + imageName + ": " + e.getMessage());

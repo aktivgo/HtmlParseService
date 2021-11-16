@@ -1,6 +1,7 @@
 package parser;
 
 import org.jsoup.nodes.Document;
+import tools.HtmlLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +10,6 @@ public class ParserWorker<T> {
 
     private Parser<T> parser;
     private final ParserSettings parserSettings;
-    private final HtmlLoader loader;
     private boolean isActive;
 
     public ArrayList<OnNewDataHandler<T>> onNewDataList = new ArrayList<>();
@@ -18,7 +18,6 @@ public class ParserWorker<T> {
     public ParserWorker(Parser<T> parser, ParserSettings parserSettings) {
         this.parser = parser;
         this.parserSettings = parserSettings;
-        loader = new HtmlLoader();
     }
 
     public Parser<T> getParser() {
@@ -39,13 +38,14 @@ public class ParserWorker<T> {
     }
 
     private void parse() throws IOException {
-        for (int i = parserSettings.getStartPoint(); i <= parserSettings.getEndPoint(); i++) {
+        for (int i = parserSettings.getExternalStartPoint(); i <= parserSettings.getExternalEndPoint(); i++) {
             if (!isActive) {
                 onCompletedList.get(0).onCompleted(this);
                 return;
             }
-            Document document = loader.GetSourceByPageId(i);
-            T result = parser.Parse(document);
+            HtmlLoader.setUrl(ParserSettings.BASE_URL + ParserSettings.SEPARATOR + ParserSettings.PREFIX);
+            Document document = HtmlLoader.getSourceByPageId(i);
+            T result = parser.Parse(document, parserSettings);
             onNewDataList.get(0).onNewData(this, result);
         }
         onCompletedList.get(0).onCompleted(this);

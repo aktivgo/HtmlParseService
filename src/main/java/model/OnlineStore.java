@@ -1,5 +1,6 @@
 package model;
 
+import model.Feedback;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

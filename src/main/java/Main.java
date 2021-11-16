@@ -1,8 +1,8 @@
 import model.OnlineStore;
 import nanegative.NanegativeParser;
 import nanegative.NanegativeSettings;
+import nanegative.NewDataOnlineStores;
 import parser.Completed;
-import parser.NewDataOnlineStore;
 import parser.ParserWorker;
 
 import java.io.IOException;
@@ -26,6 +26,7 @@ public class Main {
             switch (menu) {
                 case 0 -> System.out.println("Пока");
                 case 1 -> parseNanegative();
+                case 2 -> parseLeroymerlin();
             }
         }
     }
@@ -42,11 +43,14 @@ public class Main {
         int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
         int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
 
+        int startPageFeedback = readPagination("Введите начало пагинации отзывов: ");
+        int endPageFeedback = readPagination("Введите конец пагинации отзывов: ");
+
         ParserWorker<ArrayList<OnlineStore>> parser = new ParserWorker<>(new NanegativeParser(),
-                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore));
+                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore, startPageFeedback, endPageFeedback));
 
         parser.onCompletedList.add(new Completed());
-        parser.onNewDataList.add(new NewDataOnlineStore());
+        parser.onNewDataList.add(new NewDataOnlineStores());
 
         System.out.println("\nЗагрузка началась\n\n");
         parser.start();
@@ -64,5 +68,23 @@ public class Main {
             System.out.println("Введите целочисленное значение больше 0");
         }
         return value;
+    }
+
+    private static void parseLeroymerlin() throws IOException {
+        int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
+        int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
+
+        int startPageFeedback = readPagination("Введите начало пагинации отзывов: ");
+        int endPageFeedback = readPagination("Введите конец пагинации отзывов: ");
+
+        ParserWorker<ArrayList<OnlineStore>> parser = new ParserWorker<>(new NanegativeParser(),
+                new NanegativeSettings(startPageOnlineStore, endPageOnlineStore, startPageFeedback, endPageFeedback));
+
+        parser.onCompletedList.add(new Completed());
+        parser.onNewDataList.add(new NewDataOnlineStores());
+
+        System.out.println("\nЗагрузка началась\n\n");
+        parser.start();
+        parser.abort();
     }
 }
