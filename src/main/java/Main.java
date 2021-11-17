@@ -1,3 +1,4 @@
+import tools.ImageDownloader;
 import yandex.YandexParser;
 import yandex.YandexSettings;
 import yandex.NewDataYandex;
@@ -35,7 +36,7 @@ public class Main {
                 case 0 -> System.out.println("Пока");
                 case 1 -> parseNanegative();
                 case 2 -> parseLeroymerlin();
-                case 3 -> parseGoogle();
+                case 3 -> parseYandex();
             }
         }
     }
@@ -104,7 +105,7 @@ public class Main {
         }
     }
 
-    private static void parseGoogle() throws IOException {
+    private static void parseYandex() throws IOException {
         try {
             System.out.print("Введите запрос: ");
             String query = IN.next();

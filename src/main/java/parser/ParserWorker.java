@@ -46,7 +46,7 @@ public class ParserWorker<T> {
             }
             Document document;
             HtmlLoader.setUrl(ParserSettings.BASE_URL + ParserSettings.SEPARATOR + ParserSettings.PREFIX);
-            if (ParserSettings.PREFIX.equals("q={Query}")) {
+            if (ParserSettings.PREFIX.contains("text=")) {
                 document = HtmlLoader.getSource();
             } else {
                 document = HtmlLoader.getSourceByPageId(i);

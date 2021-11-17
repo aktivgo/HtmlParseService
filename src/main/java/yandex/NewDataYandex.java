@@ -10,8 +10,8 @@ public class NewDataYandex implements OnNewDataHandler<ArrayList<Image>> {
 
     @Override
     public void onNewData(Object sender, @NotNull ArrayList<Image> args) {
-        for (Image googleImage : args) {
-            System.out.println(googleImage);
+        for (Image image : args) {
+            System.out.println(image);
         }
     }
 }

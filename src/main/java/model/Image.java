@@ -20,6 +20,7 @@ public class Image {
 
         this.title = title;
         this.url = url;
+        ImageDownloader.setSavePath("uploads/");
         ImageDownloader.download(url);
     }
 
