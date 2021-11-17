@@ -1,6 +1,6 @@
-import google.GoogleParser;
-import google.GoogleSettings;
-import google.NewDataImage;
+import yandex.YandexParser;
+import yandex.YandexSettings;
+import yandex.NewDataYandex;
 import leroymerlin.LeroymerlinParser;
 import leroymerlin.LeroymerlinSettings;
 import leroymerlin.NewDataProducts;
@@ -109,11 +109,11 @@ public class Main {
             System.out.print("Введите запрос: ");
             String query = IN.next();
 
-            ParserWorker<ArrayList<Image>> parser = new ParserWorker<>(new GoogleParser(),
-                    new GoogleSettings(query));
+            ParserWorker<ArrayList<Image>> parser = new ParserWorker<>(new YandexParser(),
+                    new YandexSettings(query));
 
             parser.onCompletedList.add(new Completed());
-            parser.onNewDataList.add(new NewDataImage());
+            parser.onNewDataList.add(new NewDataYandex());
 
             System.out.println("\nЗагрузка началась\n\n");
             parser.start();

@@ -19,10 +19,8 @@ public abstract class ImageDownloader {
 
     public static void download(String imageUrl) throws IOException {
         BufferedImage input = ImageIO.read(new URL(imageUrl));
-        //String imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
         String imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-        //String imageExtension = imageName.substring(imageName.lastIndexOf(".") + 1);
-        String imageExtension = "jpeg";
+        String imageExtension = imageName.substring(imageName.lastIndexOf(".") + 1);
         File output = new File(savePath + imageName);
         try {
             ImageIO.write(input, imageExtension, output);

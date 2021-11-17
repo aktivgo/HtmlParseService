@@ -1,4 +1,4 @@
-package google;
+package yandex;
 
 import model.Image;
 import org.jetbrains.annotations.NotNull;
@@ -6,7 +6,7 @@ import parser.OnNewDataHandler;
 
 import java.util.ArrayList;
 
-public class NewDataImage implements OnNewDataHandler<ArrayList<Image>> {
+public class NewDataYandex implements OnNewDataHandler<ArrayList<Image>> {
 
     @Override
     public void onNewData(Object sender, @NotNull ArrayList<Image> args) {

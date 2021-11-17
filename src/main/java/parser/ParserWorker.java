@@ -1,5 +1,6 @@
 package parser;
 
+import org.json.simple.parser.ParseException;
 import org.jsoup.nodes.Document;
 import tools.HtmlLoader;
 
@@ -28,7 +29,7 @@ public class ParserWorker<T> {
         this.parser = parser;
     }
 
-    public void start() throws IOException {
+    public void start() throws IOException, ParseException {
         isActive = true;
         parse();
     }
@@ -37,7 +38,7 @@ public class ParserWorker<T> {
         isActive = false;
     }
 
-    private void parse() throws IOException {
+    private void parse() throws IOException, ParseException {
         for (int i = parserSettings.getExternalStartPoint(); i <= parserSettings.getExternalEndPoint(); i++) {
             if (!isActive) {
                 onCompletedList.get(0).onCompleted(this);
