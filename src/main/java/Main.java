@@ -1,7 +1,3 @@
-import tools.ImageDownloader;
-import yandex.YandexParser;
-import yandex.YandexSettings;
-import yandex.NewDataYandex;
 import leroymerlin.LeroymerlinParser;
 import leroymerlin.LeroymerlinSettings;
 import leroymerlin.NewDataProducts;
@@ -13,8 +9,11 @@ import nanegative.NanegativeSettings;
 import nanegative.NewDataOnlineStores;
 import parser.Completed;
 import parser.ParserWorker;
+import tools.ImageDownloader;
+import yandex.NewDataYandex;
+import yandex.YandexParser;
+import yandex.YandexSettings;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -111,13 +110,13 @@ public class Main {
             System.out.print("Введите запрос: ");
             String query = IN.next();
 
-            System.out.print("Сколько изображений скачать: ");
-            int count = IN.nextInt();
+            int startPage = readPagination("Введите начало пагинации: ");
+            int endPage = readPagination("Введите конец пагинации: ");
 
             ImageDownloader.setSavePath("uploads/" + query + "/");
 
             ParserWorker<ArrayList<Image>> parser = new ParserWorker<>(new YandexParser(),
-                    new YandexSettings(query, count));
+                    new YandexSettings(query, startPage - 1, endPage - 1));
 
             parser.onCompletedList.add(new Completed());
             parser.onNewDataList.add(new NewDataYandex());

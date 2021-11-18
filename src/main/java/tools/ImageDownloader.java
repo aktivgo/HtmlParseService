@@ -1,11 +1,8 @@
 package tools;
 
-import parser.Parser;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
 public abstract class ImageDownloader {
@@ -35,7 +32,7 @@ public abstract class ImageDownloader {
         try {
             ImageIO.write(input, imageExtension, output);
         } catch (Exception e) {
-            System.out.println("Ошибка при сохранении изображения  " + imageName + ": " + e.getMessage());
+            System.out.println("Ошибка при сохранении изображения " + imageName + ": " + e.getMessage() + "\n");
         }
     }
 
@@ -46,7 +43,7 @@ public abstract class ImageDownloader {
         try {
             ImageIO.write(input, imageExtension, output);
         } catch (Exception e) {
-            System.out.println("Ошибка при сохранении изображения  " + title + ": " + e.getMessage());
+            System.out.println("Ошибка при сохранении изображения " + title + ": " + e.getMessage() + "\n");
         }
     }
 }

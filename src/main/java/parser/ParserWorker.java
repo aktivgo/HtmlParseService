@@ -3,7 +3,6 @@ package parser;
 import org.jsoup.nodes.Document;
 import tools.HtmlLoader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ParserWorker<T> {
@@ -45,11 +44,7 @@ public class ParserWorker<T> {
             }
             Document document;
             HtmlLoader.setUrl(ParserSettings.BASE_URL + ParserSettings.SEPARATOR + ParserSettings.PREFIX);
-            if (ParserSettings.PREFIX.contains("text=")) {
-                document = HtmlLoader.getSource();
-            } else {
-                document = HtmlLoader.getSourceByPageId(i);
-            }
+            document = HtmlLoader.getSourceByPageId(i);
             T result = parser.Parse(document, parserSettings);
             onNewDataList.get(0).onNewData(this, result);
         }

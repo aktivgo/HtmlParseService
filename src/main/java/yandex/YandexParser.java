@@ -17,15 +17,11 @@ public class YandexParser implements Parser<ArrayList<Image>> {
         ArrayList<Image> images = new ArrayList<>();
 
         Elements elements = document.getElementsByClass("serp-item");
-        int count = 0;
         for (Element element : elements) {
-            if (count == YandexSettings.count) {
-                return images;
-            }
             try {
                 String data_bem = element.attr("data-bem");
 
-                String imageUrl;
+                String imageUrl = "";
                 do {
                     String originNode = data_bem.substring(data_bem.indexOf("\"origin\":") + 9);
                     String urlNode = originNode.substring(originNode.indexOf("\"url\":") + 7);
@@ -33,10 +29,14 @@ public class YandexParser implements Parser<ArrayList<Image>> {
                     data_bem = originNode;
                 } while (data_bem.contains("\"origin\":") && imageUrl.lastIndexOf(".") == -1);
 
+                if (imageUrl.isEmpty()) {
+                    continue;
+                }
+
                 String title = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.lastIndexOf("."));
                 images.add(new Image(title, imageUrl));
-                count++;
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         return images;
     }

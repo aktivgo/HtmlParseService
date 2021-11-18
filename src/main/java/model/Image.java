@@ -3,8 +3,6 @@ package model;
 import org.jetbrains.annotations.NotNull;
 import tools.ImageDownloader;
 
-import java.io.IOException;
-
 public class Image {
     String title = null;
     String url = null;
