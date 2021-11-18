@@ -2,15 +2,11 @@ package yandex;
 
 import model.Image;
 import org.jetbrains.annotations.NotNull;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import parser.Parser;
 import parser.ParserSettings;
-import tools.HtmlLoader;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +14,7 @@ import java.util.ArrayList;
 public class YandexParser implements Parser<ArrayList<Image>> {
 
     @Override
-    public ArrayList<Image> Parse(@NotNull Document document, ParserSettings parserSettings) throws IOException, ParseException {
+    public ArrayList<Image> Parse(@NotNull Document document, ParserSettings parserSettings) throws IOException {
         ArrayList<Image> images = new ArrayList<>();
 
         Elements elements = document.getElementsByClass("serp-item");
