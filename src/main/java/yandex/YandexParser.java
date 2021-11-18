@@ -8,24 +8,35 @@ import org.jsoup.select.Elements;
 import parser.Parser;
 import parser.ParserSettings;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class YandexParser implements Parser<ArrayList<Image>> {
 
     @Override
-    public ArrayList<Image> Parse(@NotNull Document document, ParserSettings parserSettings) throws IOException {
+    public ArrayList<Image> Parse(@NotNull Document document, ParserSettings parserSettings) {
         ArrayList<Image> images = new ArrayList<>();
 
         Elements elements = document.getElementsByClass("serp-item");
+        int count = 0;
         for (Element element : elements) {
-            String data_bem = element.attr("data-bem");
+            if (count == YandexSettings.count) {
+                return images;
+            }
+            try {
+                String data_bem = element.attr("data-bem");
 
-            String origin = data_bem.substring(data_bem.indexOf("\"origin\":"));
-            String imageUrl = origin.substring(origin.indexOf("\"url\":") + 7, origin.indexOf("}") - 1);
+                String imageUrl;
+                do {
+                    String originNode = data_bem.substring(data_bem.indexOf("\"origin\":") + 9);
+                    String urlNode = originNode.substring(originNode.indexOf("\"url\":") + 7);
+                    imageUrl = urlNode.substring(0, urlNode.indexOf("\""));
+                    data_bem = originNode;
+                } while (data_bem.contains("\"origin\":") && imageUrl.lastIndexOf(".") == -1);
 
-            String title = imageUrl.substring(imageUrl.lastIndexOf("/"), imageUrl.lastIndexOf(".") - 1);
-            images.add(new Image(title, imageUrl));
+                String title = imageUrl.substring(imageUrl.lastIndexOf("/") + 1, imageUrl.lastIndexOf("."));
+                images.add(new Image(title, imageUrl));
+                count++;
+            } catch (Exception ignored) {}
         }
         return images;
     }

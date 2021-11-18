@@ -13,15 +13,14 @@ public class Image {
 
     }
 
-    public Image(@NotNull String title, String url) throws IOException {
+    public Image(@NotNull String title, String url) throws Exception {
         if (title.isEmpty() || url.isEmpty()) {
             throw new NullPointerException("Устанавливаемые значения пустые");
         }
 
         this.title = title;
         this.url = url;
-        ImageDownloader.setSavePath("uploads/");
-        ImageDownloader.download(url);
+        ImageDownloader.download(url, title);
     }
 
     public String getTitle() {
@@ -58,6 +57,6 @@ public class Image {
 
     @Override
     public String toString() {
-        return title.isEmpty() ? "" : title + "\n" + (url.isEmpty() ? "" : url);
+        return title.isEmpty() ? "" : title + "\n" + (url.isEmpty() ? "" : url + "\n");
     }
 }

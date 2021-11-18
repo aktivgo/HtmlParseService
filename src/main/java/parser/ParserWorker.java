@@ -28,7 +28,7 @@ public class ParserWorker<T> {
         this.parser = parser;
     }
 
-    public void start() throws IOException {
+    public void start() throws Exception {
         isActive = true;
         parse();
     }
@@ -37,7 +37,7 @@ public class ParserWorker<T> {
         isActive = false;
     }
 
-    private void parse() throws IOException {
+    private void parse() throws Exception {
         for (int i = parserSettings.getExternalStartPoint(); i <= parserSettings.getExternalEndPoint(); i++) {
             if (!isActive) {
                 onCompletedList.get(0).onCompleted(this);

@@ -16,13 +16,14 @@ import parser.ParserWorker;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
 
     private static final Scanner IN = new Scanner(System.in);
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         int menu = -1;
         while (menu != 0) {
             printMenu();
@@ -45,11 +46,11 @@ public class Main {
         System.out.println("Парсинг:");
         System.out.println("1. https://nanegative.ru/internet-magaziny");
         System.out.println("2. https://leroymerlin.ru/");
-        System.out.println("3. Картинки из интеренета");
+        System.out.println("3. Картинки из интернета");
         System.out.println("0. Выход");
     }
 
-    private static void parseNanegative() throws IOException {
+    private static void parseNanegative() {
         try {
             int startPageOnlineStore = readPagination("Введите начало пагинации интернет-магазинов: ");
             int endPageOnlineStore = readPagination("Введите конец пагинации интернет-магазинов: ");
@@ -84,7 +85,7 @@ public class Main {
         return value;
     }
 
-    private static void parseLeroymerlin() throws IOException {
+    private static void parseLeroymerlin() {
         try {
             System.out.print("Введите категорию товаров транслитом: ");
             String category = IN.next();
@@ -105,13 +106,18 @@ public class Main {
         }
     }
 
-    private static void parseYandex() throws IOException {
+    private static void parseYandex() {
         try {
             System.out.print("Введите запрос: ");
             String query = IN.next();
 
+            System.out.print("Сколько изображений скачать: ");
+            int count = IN.nextInt();
+
+            ImageDownloader.setSavePath("uploads/" + query + "/");
+
             ParserWorker<ArrayList<Image>> parser = new ParserWorker<>(new YandexParser(),
-                    new YandexSettings(query));
+                    new YandexSettings(query, count));
 
             parser.onCompletedList.add(new Completed());
             parser.onNewDataList.add(new NewDataYandex());
@@ -120,7 +126,7 @@ public class Main {
             parser.start();
             parser.abort();
         } catch (Exception e) {
-            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n");
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()) + "\n");
         }
     }
 }
