@@ -15,7 +15,7 @@ import java.util.Objects;
 public class KirovportalParser implements Parser<ArrayList<News>> {
 
     @Override
-    public ArrayList<News> Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) {
+    public @NotNull ArrayList<News> Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) {
         ArrayList<News> news = new ArrayList<>();
 
         Elements elements = Objects.requireNonNull(document.getElementById("appendPage")).children();

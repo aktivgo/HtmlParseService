@@ -6,7 +6,7 @@ public class NanegativeSettings extends ParserSettings {
 
     public NanegativeSettings(int startPageOnlineStore, int endPageOnlineStore, int startPageFeedback, int endPageFeedback) {
         if (startPageOnlineStore <= 0 || endPageOnlineStore < startPageOnlineStore || startPageFeedback <= 0 || endPageFeedback < startPageFeedback) {
-            throw new IllegalArgumentException("Один из аргументов некорректен");
+            throw new IllegalArgumentException("Некорректные входные данные");
         }
 
         externalStartPoint = startPageOnlineStore;

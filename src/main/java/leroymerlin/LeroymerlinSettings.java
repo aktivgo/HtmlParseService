@@ -6,7 +6,7 @@ public class LeroymerlinSettings extends ParserSettings {
 
     public LeroymerlinSettings(int startPage, int endPage, String category) {
         if (startPage <= 0 || endPage < startPage || category.isEmpty()) {
-            throw new IllegalArgumentException("Один из аргументов некорректен");
+            throw new IllegalArgumentException("Некорректные входные данные");
         }
 
         externalStartPoint = startPage;

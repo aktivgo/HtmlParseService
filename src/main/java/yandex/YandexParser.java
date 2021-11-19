@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class YandexParser implements Parser<ArrayList<Image>> {
 
     @Override
-    public ArrayList<Image> Parse(@NotNull Document document, ParserSettings parserSettings) {
+    public @NotNull ArrayList<Image> Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) {
         ArrayList<Image> images = new ArrayList<>();
 
         Elements elements = document.getElementsByClass("serp-item");
@@ -21,7 +21,7 @@ public class YandexParser implements Parser<ArrayList<Image>> {
             try {
                 String data_bem = element.attr("data-bem");
 
-                String imageUrl = "";
+                String imageUrl;
                 do {
                     String originNode = data_bem.substring(data_bem.indexOf("\"origin\":") + 9);
                     String urlNode = originNode.substring(originNode.indexOf("\"url\":") + 7);
@@ -38,6 +38,7 @@ public class YandexParser implements Parser<ArrayList<Image>> {
             } catch (Exception ignored) {
             }
         }
+
         return images;
     }
 }

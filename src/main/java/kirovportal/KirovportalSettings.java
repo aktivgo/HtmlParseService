@@ -6,7 +6,7 @@ public class KirovportalSettings extends ParserSettings {
 
     public KirovportalSettings(int startPage, int endPage) {
         if (startPage <= 0 || endPage < startPage) {
-            throw new IllegalArgumentException("Один из аргументов некорректен");
+            throw new IllegalArgumentException("Неккоректные входные данные");
         }
 
         externalStartPoint = startPage;
