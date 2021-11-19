@@ -160,7 +160,7 @@ public class Main {
             System.out.print("Введите категорию: ");
             String category = IN.next();
 
-            ImageDownloader.setSavePath("uploads/washingtonpost/");
+            ImageDownloader.setSavePath("uploads/washingtonpost/" + category + "/");
 
             ParserWorker<ArrayList<News>> parser = new ParserWorker<>(new WashingtonPostParser(),
                     new WashingtonPostSettings(category));
