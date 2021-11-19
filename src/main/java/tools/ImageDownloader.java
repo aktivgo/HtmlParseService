@@ -18,17 +18,10 @@ public abstract class ImageDownloader {
 
     public static void download(String imageUrl) throws Exception {
         BufferedImage input = ImageIO.read(new URL(imageUrl));
-        String imageName;
-        if (imageUrl.lastIndexOf("/") == -1 && imageUrl.lastIndexOf("\\") == -1) {
-            throw new Exception("Ошибка при определении названия изображения");
-        }
-        if (imageUrl.lastIndexOf("\\") != -1) {
-            imageName = imageUrl.substring(imageUrl.lastIndexOf("\\") + 1);
-        } else {
-            imageName = imageUrl.substring(imageUrl.lastIndexOf("/") + 1);
-        }
-        String imageExtension = imageName.substring(imageName.lastIndexOf(".") + 1);
-        File output = new File(savePath + imageName);
+        String imageName = imageUrl.substring(imageUrl.lastIndexOf("/"), imageUrl.lastIndexOf("."));
+        String afterPoint = imageUrl.substring(imageUrl.lastIndexOf(".") + 1);
+        String imageExtension = afterPoint.contains("&") ? afterPoint.substring(0, afterPoint.indexOf("&")) : afterPoint;
+        File output = new File(savePath + imageName + "." + imageExtension);
         try {
             ImageIO.write(input, imageExtension, output);
         } catch (Exception e) {
@@ -38,7 +31,8 @@ public abstract class ImageDownloader {
 
     public static void download(String imageUrl, String title) throws Exception {
         BufferedImage input = ImageIO.read(new URL(imageUrl));
-        String imageExtension = imageUrl.substring(imageUrl.lastIndexOf(".") + 1);
+        String afterPoint = imageUrl.substring(imageUrl.lastIndexOf(".") + 1);
+        String imageExtension = afterPoint.contains("&") ? afterPoint.substring(0, afterPoint.indexOf("&")) : afterPoint;
         File output = new File(savePath + title + "." + imageExtension);
         try {
             ImageIO.write(input, imageExtension, output);

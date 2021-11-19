@@ -15,6 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import parser.Completed;
 import parser.ParserWorker;
 import tools.ImageDownloader;
+import washingtonpost.WashingtonPostParser;
+import washingtonpost.WashingtonPostSettings;
 import yandex.NewDataYandex;
 import yandex.YandexParser;
 import yandex.YandexSettings;
@@ -43,6 +45,7 @@ public class Main {
                 case 2 -> parseLeroymerlin();
                 case 3 -> parseYandex();
                 case 4 -> parseKirovportal();
+                case 5 -> parseWashingtonpost();
             }
         }
     }
@@ -53,6 +56,7 @@ public class Main {
         System.out.println("2. https://leroymerlin.ru/");
         System.out.println("3. Картинки из интернета");
         System.out.println("4. https://kirov-portal.ru/news/");
+        System.out.println("5. https://www.washingtonpost.com/");
         System.out.println("0. Выход");
     }
 
@@ -118,7 +122,7 @@ public class Main {
             int startPage = readPagination("Введите начало пагинации: ");
             int endPage = readPagination("Введите конец пагинации: ");
 
-            ImageDownloader.setSavePath("uploads/" + query + "/");
+            ImageDownloader.setSavePath("uploads/yandex/" + query + "/");
 
             ParserWorker<ArrayList<Image>> parser = new ParserWorker<>(new YandexParser(),
                     new YandexSettings(query, startPage - 1, endPage - 1));
@@ -137,10 +141,29 @@ public class Main {
             int startPage = readPagination("Введите начало пагинации: ");
             int endPage = readPagination("Введите конец пагинации: ");
 
-            ImageDownloader.setSavePath("uploads/");
+            ImageDownloader.setSavePath("uploads/kirovportal/");
 
             ParserWorker<ArrayList<News>> parser = new ParserWorker<>(new KirovportalParser(),
                     new KirovportalSettings(startPage, endPage));
+
+            parser.onCompletedList.add(new Completed());
+            parser.onNewDataList.add(new NewDataNews());
+
+            parseWork(parser);
+        } catch (Exception e) {
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()) + "\n");
+        }
+    }
+
+    private static void parseWashingtonpost() {
+        try {
+            System.out.print("Введите категорию: ");
+            String category = IN.next();
+
+            ImageDownloader.setSavePath("uploads/washingtonpost/");
+
+            ParserWorker<ArrayList<News>> parser = new ParserWorker<>(new WashingtonPostParser(),
+                    new WashingtonPostSettings(category));
 
             parser.onCompletedList.add(new Completed());
             parser.onNewDataList.add(new NewDataNews());

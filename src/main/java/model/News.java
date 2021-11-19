@@ -1,64 +1,60 @@
 package model;
 
 import org.jetbrains.annotations.NotNull;
+import tools.ImageDownloader;
 
 public class News {
     private String title;
-    private String imageUrl;
+    private String date;
     private String text;
+    private String imageUrl;
 
-    public News() {
-
-    }
-
-    public News(@NotNull String title, String imageUrl, String text) {
-        if (title.isEmpty() || imageUrl.isEmpty() || text.isEmpty()) {
-            throw new NullPointerException("Одно из устанавливаемых значений пустое");
-        }
-
+    public News(@NotNull String title, @NotNull String date, @NotNull String text, @NotNull String imageUrl) throws Exception {
         this.title = title;
+        this.date = date;
         this.imageUrl = imageUrl;
         this.text = text;
+
+        if (!imageUrl.equals("")) {
+            ImageDownloader.download(imageUrl);
+        }
     }
 
 
-    public String getTitle() {
-        if (title == null) {
-            throw new NullPointerException("Заголовок не был установлен");
-        }
+    public @NotNull String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        if (title == null) {
-            throw new NullPointerException("Устанавливаемый заголовок пустой");
-        }
+    public void setTitle(@NotNull String title) {
         this.title = title;
     }
 
-    public String getImageUrl() {
-        if (imageUrl == null) {
-            throw new NullPointerException("Изображение не было установлено");
-        }
-        return imageUrl;
+    public @NotNull String getDate() {
+        return date;
     }
 
-    public String getText() {
-        if (text == null) {
-            throw new NullPointerException("Текст не был установлен");
-        }
+    public void setDate(@NotNull String date) {
+        this.date = date;
+    }
+
+    public @NotNull String getText() {
         return text;
     }
 
-    public void setText(String text) {
-        if (text == null) {
-            throw new NullPointerException("Устанавливаемый текст пустой");
-        }
+    public void setText(@NotNull String text) {
         this.text = text;
+    }
+
+    public @NotNull String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(@NotNull String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override
     public String toString() {
-        return title + "\n" + text + "\n" + imageUrl + "\n";
+        return title + "\n" + date + "\n" + text + "\n" + imageUrl + "\n";
     }
 }
