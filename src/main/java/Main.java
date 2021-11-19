@@ -1,12 +1,17 @@
+import kirovportal.KirovportalParser;
+import kirovportal.KirovportalSettings;
+import kirovportal.NewDataNews;
 import leroymerlin.LeroymerlinParser;
 import leroymerlin.LeroymerlinSettings;
 import leroymerlin.NewDataProducts;
 import model.Image;
+import model.News;
 import model.OnlineStore;
 import model.Product;
 import nanegative.NanegativeParser;
 import nanegative.NanegativeSettings;
 import nanegative.NewDataOnlineStores;
+import org.jetbrains.annotations.NotNull;
 import parser.Completed;
 import parser.ParserWorker;
 import tools.ImageDownloader;
@@ -37,6 +42,7 @@ public class Main {
                 case 1 -> parseNanegative();
                 case 2 -> parseLeroymerlin();
                 case 3 -> parseYandex();
+                case 4 -> parseKirovportal();
             }
         }
     }
@@ -46,6 +52,7 @@ public class Main {
         System.out.println("1. https://nanegative.ru/internet-magaziny");
         System.out.println("2. https://leroymerlin.ru/");
         System.out.println("3. Картинки из интернета");
+        System.out.println("4. https://kirov-portal.ru/news/");
         System.out.println("0. Выход");
     }
 
@@ -97,11 +104,9 @@ public class Main {
             parser.onCompletedList.add(new Completed());
             parser.onNewDataList.add(new NewDataProducts());
 
-            System.out.println("\nЗагрузка началась\n\n");
-            parser.start();
-            parser.abort();
+            parseWork(parser);
         } catch (Exception e) {
-            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n");
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()) + "\n");
         }
     }
 
@@ -121,11 +126,34 @@ public class Main {
             parser.onCompletedList.add(new Completed());
             parser.onNewDataList.add(new NewDataYandex());
 
-            System.out.println("\nЗагрузка началась\n\n");
-            parser.start();
-            parser.abort();
+            parseWork(parser);
         } catch (Exception e) {
             System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()) + "\n");
         }
+    }
+
+    private static void parseKirovportal() {
+        try {
+            int startPage = readPagination("Введите начало пагинации: ");
+            int endPage = readPagination("Введите конец пагинации: ");
+
+            ImageDownloader.setSavePath("uploads/");
+
+            ParserWorker<ArrayList<News>> parser = new ParserWorker<>(new KirovportalParser(),
+                    new KirovportalSettings(startPage, endPage));
+
+            parser.onCompletedList.add(new Completed());
+            parser.onNewDataList.add(new NewDataNews());
+
+            parseWork(parser);
+        } catch (Exception e) {
+            System.out.println("Что-то пошло не так...\n" + e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()) + "\n");
+        }
+    }
+
+    private static void parseWork(@NotNull ParserWorker parser) throws Exception {
+        System.out.println("\nЗагрузка началась\n\n");
+        parser.start();
+        parser.abort();
     }
 }
