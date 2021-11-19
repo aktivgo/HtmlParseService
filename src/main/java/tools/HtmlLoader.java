@@ -14,7 +14,6 @@ public abstract class HtmlLoader {
         if (url.isEmpty()) {
             throw new NullPointerException("Устанавливаемая ссылка пустая");
         }
-
         HtmlLoader.url = url;
     }
 
@@ -22,7 +21,6 @@ public abstract class HtmlLoader {
         if (url.isEmpty()) {
             throw new NullPointerException("Ссылка не была установлена");
         }
-
         return Jsoup.connect(url).get();
     }
 
