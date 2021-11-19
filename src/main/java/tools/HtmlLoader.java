@@ -14,6 +14,7 @@ public abstract class HtmlLoader {
         if (url.isEmpty()) {
             throw new NullPointerException("Устанавливаемая ссылка пустая");
         }
+
         HtmlLoader.url = url;
     }
 
@@ -21,6 +22,7 @@ public abstract class HtmlLoader {
         if (url.isEmpty()) {
             throw new NullPointerException("Ссылка не была установлена");
         }
+
         return Jsoup.connect(url).get();
     }
 
@@ -28,6 +30,11 @@ public abstract class HtmlLoader {
         if (url.isEmpty()) {
             throw new NullPointerException("Ссылка не была установлена");
         }
+
+        if (id < 0) {
+            throw new IllegalArgumentException("id не может быть меньше либо равен 0");
+        }
+
         String currentUrl = url.replace("{CurrentId}", Integer.toString(id));
         return Jsoup.connect(currentUrl).get();
     }

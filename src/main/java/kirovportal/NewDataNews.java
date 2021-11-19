@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class NewDataNews implements OnNewDataHandler<ArrayList<News>> {
 
     @Override
-    public void onNewData(Object sender, @NotNull ArrayList<News> args) {
+    public void onNewData(@NotNull Object sender, @NotNull ArrayList<News> args) {
         for (News news : args) {
             System.out.println(news);
         }

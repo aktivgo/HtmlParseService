@@ -1,5 +1,6 @@
 package parser;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import tools.HtmlLoader;
 
@@ -14,16 +15,16 @@ public class ParserWorker<T> {
     public ArrayList<OnNewDataHandler<T>> onNewDataList = new ArrayList<>();
     public ArrayList<OnCompleted> onCompletedList = new ArrayList<>();
 
-    public ParserWorker(Parser<T> parser, ParserSettings parserSettings) {
+    public ParserWorker(@NotNull Parser<T> parser, @NotNull ParserSettings parserSettings) {
         this.parser = parser;
         this.parserSettings = parserSettings;
     }
 
-    public Parser<T> getParser() {
+    public @NotNull Parser<T> getParser() {
         return parser;
     }
 
-    public void setParser(Parser<T> parser) {
+    public void setParser(@NotNull Parser<T> parser) {
         this.parser = parser;
     }
 

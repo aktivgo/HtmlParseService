@@ -3,69 +3,42 @@ package model;
 import org.jetbrains.annotations.NotNull;
 
 public class Feedback {
-    private String pros = null;
-    private String cons = null;
-    private String text = null;
+    private String pros;
+    private String cons;
+    private String text;
 
-    public Feedback() {
-
-    }
-
-    public Feedback(String pros, String cons, String text) {
-
+    public Feedback(@NotNull String pros, @NotNull String cons, @NotNull String text) {
         this.pros = pros;
         this.cons = cons;
         this.text = text;
     }
 
-    public String getPros() {
-        if (pros.isEmpty()) {
-            throw new NullPointerException("Поле плюсов не было установлено");
-        }
-
+    public @NotNull String getPros() {
         return pros;
     }
 
     public void setPros(@NotNull String pros) {
-        if (pros.isEmpty()) {
-            throw new NullPointerException("Устанавливаемое поле плюсов пустое");
-        }
-
         this.pros = pros;
     }
 
-    public String getCons() {
-        if (cons.isEmpty()) {
-            throw new NullPointerException("Поле минусов не было установлено");
-        }
-
+    public @NotNull String getCons() {
         return cons;
     }
 
     public void setCons(@NotNull String cons) {
-        if (cons.isEmpty()) {
-            throw new NullPointerException("Устанавливаемое поле минусов пустое");
-        }
-
         this.cons = cons;
     }
 
-    public String getText() {
-        if (text.isEmpty()) {
-            throw new NullPointerException("Поле отзыва не было установлено");
-        }
+    public @NotNull String getText() {
         return text;
     }
 
     public void setText(@NotNull String text) {
-        if (text.isEmpty()) {
-            throw new NullPointerException("Устанавливаемое поле отзыва пустое");
-        }
         this.text = text;
     }
 
     @Override
     public String toString() {
-        return (pros.isEmpty() ? "" : "Плюсы: " + pros) + (cons.isEmpty() ? "" : "\nМинусы: " + cons) + (text.isEmpty() ? "" :"\nОтзыв: " + text) + "\n";
+        return "Плюсы: " + pros + "\nМинусы: " + cons + "\nОтзыв: " + text + "\n";
     }
 }

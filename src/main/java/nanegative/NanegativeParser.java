@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class NanegativeParser implements Parser<ArrayList<OnlineStore>> {
 
     @Override
-    public ArrayList<OnlineStore> Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) throws IOException {
+    public @NotNull ArrayList<OnlineStore> Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) throws IOException {
 
         ArrayList<OnlineStore> onlineStores = new ArrayList<>();
 
@@ -34,7 +34,7 @@ public class NanegativeParser implements Parser<ArrayList<OnlineStore>> {
         return onlineStores;
     }
 
-    private @NotNull ArrayList<Feedback> parseFeedbacks(String onlineStorePath, @NotNull ParserSettings parserSettings) throws IOException {
+    private @NotNull ArrayList<Feedback> parseFeedbacks(@NotNull String onlineStorePath, @NotNull ParserSettings parserSettings) throws IOException {
         ArrayList<Feedback> feedbacks = new ArrayList<>();
 
         for (int i = parserSettings.getInternalStartPoint(); i <= parserSettings.getInternalEndPoint(); i++) {

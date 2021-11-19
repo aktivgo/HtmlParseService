@@ -1,6 +1,8 @@
 package parser;
 
+import org.jetbrains.annotations.NotNull;
+
 public interface OnCompleted {
 
-    void onCompleted(Object sender);
+    void onCompleted(@NotNull Object sender);
 }

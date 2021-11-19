@@ -9,7 +9,6 @@ import parser.Parser;
 import parser.ParserSettings;
 import tools.HtmlLoader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -17,7 +16,7 @@ public class WashingtonPostParser implements Parser<ArrayList<News>> {
 
     @Override
     public @NotNull ArrayList<News> Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) {
-        ArrayList<News> news =new ArrayList<>();
+        ArrayList<News> news = new ArrayList<>();
 
         Elements elements = document.getElementsByClass("story-list-story");
 
@@ -34,7 +33,8 @@ public class WashingtonPostParser implements Parser<ArrayList<News>> {
                 String imageUrl = srcset.equals("") ? "" : srcset.substring(0, srcset.indexOf(" "));
 
                 news.add(new News(title, date, text, imageUrl));
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         return news;

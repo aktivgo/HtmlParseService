@@ -5,17 +5,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 
 public class Product {
-    private String name = null;
-    private double price = 0;
+    private String name;
+    private double price;
     private ArrayList<Feedback> feedbacks;
 
     public Product() {
         feedbacks = new ArrayList<>();
     }
 
-    public Product(@NotNull String name, double price, ArrayList<Feedback> feedbacks) {
-        if (name.isEmpty() || price == 0) {
-            throw new NullPointerException("Устанавливаемые значения пустые");
+    public Product(@NotNull String name, double price, @NotNull ArrayList<Feedback> feedbacks) {
+        if (price == 0) {
+            throw new NullPointerException("Устанавливаемая цена не может быть равна 0");
         }
 
         this.name = name;
@@ -23,19 +23,11 @@ public class Product {
         this.feedbacks = feedbacks;
     }
 
-    public String getName() {
-        if (name.isEmpty()) {
-            throw new NullPointerException("Имя не было установлено");
-        }
-
+    public @NotNull String getName() {
         return name;
     }
 
     public void setName(@NotNull String name) {
-        if (name.isEmpty()) {
-            throw new NullPointerException("Устанавливаемое имя пустое");
-        }
-
         this.name = name;
     }
 
@@ -47,27 +39,19 @@ public class Product {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         if (price == 0) {
-            throw new NullPointerException("Устанавливаемая стоимость пустая");
+            throw new NullPointerException("Устанавливаемая цена не может быть равна 0");
         }
 
         this.price = price;
     }
 
-    public ArrayList<Feedback> getFeedbacks() {
-        if (feedbacks.isEmpty()) {
-            throw new NullPointerException("Список отзывов не был установлен");
-        }
-
+    public @NotNull ArrayList<Feedback> getFeedbacks() {
         return feedbacks;
     }
 
     public void setFeedbacks(@NotNull ArrayList<Feedback> feedbacks) {
-        if (feedbacks.isEmpty()) {
-            throw new NullPointerException("Устанавливаемый список отзывов пустой");
-        }
-
         this.feedbacks = feedbacks;
     }
 

@@ -1,5 +1,7 @@
 package tools;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -9,18 +11,27 @@ public abstract class ImageDownloader {
 
     private static String savePath = "uploads/";
 
-    public static void setSavePath(String savePath) {
+    public static void setSavePath(@NotNull String savePath) {
+        if (savePath.isEmpty()) {
+            throw new NullPointerException("Устанавливаемый путь пустой");
+        }
+
         ImageDownloader.savePath = savePath;
+
         if (new File(ImageDownloader.savePath).mkdirs()) {
             System.out.println("Директория для сохранения изображений успешно создана\n");
         }
     }
 
-    public static void download(String imageUrl) throws Exception {
+    public static void download(@NotNull String imageUrl) throws Exception {
+        if (imageUrl.isEmpty()) {
+            throw new IllegalArgumentException("Пустая входная ссылка");
+        }
+
         BufferedImage input = ImageIO.read(new URL(imageUrl));
-        String imageName = imageUrl.substring(imageUrl.lastIndexOf("/"), imageUrl.lastIndexOf("."));
-        String afterPoint = imageUrl.substring(imageUrl.lastIndexOf(".") + 1);
-        String imageExtension = afterPoint.contains("&") ? afterPoint.substring(0, afterPoint.indexOf("&")) : afterPoint;
+        String imageName = getImageName(imageUrl);
+        String imageExtension = getImageExtension(imageUrl);
+
         File output = new File(savePath + imageName + "." + imageExtension);
         try {
             ImageIO.write(input, imageExtension, output);
@@ -29,15 +40,30 @@ public abstract class ImageDownloader {
         }
     }
 
-    public static void download(String imageUrl, String title) throws Exception {
+    public static void download(@NotNull String imageUrl, @NotNull String title) throws Exception {
+        if (imageUrl.isEmpty()) {
+            throw new IllegalArgumentException("Пустая входная ссылка");
+        }
+
         BufferedImage input = ImageIO.read(new URL(imageUrl));
-        String afterPoint = imageUrl.substring(imageUrl.lastIndexOf(".") + 1);
-        String imageExtension = afterPoint.contains("&") ? afterPoint.substring(0, afterPoint.indexOf("&")) : afterPoint;
+        String imageExtension = getImageExtension(imageUrl);
+
         File output = new File(savePath + title + "." + imageExtension);
         try {
             ImageIO.write(input, imageExtension, output);
         } catch (Exception e) {
             System.out.println("Ошибка при сохранении изображения " + title + ": " + e.getMessage() + "\n");
         }
+    }
+
+    private @NotNull
+    static String getImageName(@NotNull String imageUrl) {
+        return imageUrl.substring(imageUrl.lastIndexOf("/"), imageUrl.lastIndexOf("."));
+    }
+
+    private @NotNull
+    static String getImageExtension(@NotNull String imageUrl) {
+        String afterPoint = imageUrl.substring(imageUrl.lastIndexOf(".") + 1);
+        return afterPoint.contains("&") ? afterPoint.substring(0, afterPoint.indexOf("&")) : afterPoint;
     }
 }

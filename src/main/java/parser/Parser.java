@@ -1,9 +1,8 @@
 package parser;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 
-import java.io.IOException;
-
 public interface Parser<T> {
-    T Parse(Document document, ParserSettings parserSettings) throws Exception;
+    T Parse(@NotNull Document document, @NotNull ParserSettings parserSettings) throws Exception;
 }
