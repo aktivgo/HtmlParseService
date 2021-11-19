@@ -29,7 +29,7 @@ public class YandexParser implements Parser<ArrayList<Image>> {
                     data_bem = originNode;
                 } while (data_bem.contains("\"origin\":") && imageUrl.lastIndexOf(".") == -1);
 
-                if (imageUrl.isEmpty()) {
+                if (imageUrl.equals("")) {
                     continue;
                 }
 
