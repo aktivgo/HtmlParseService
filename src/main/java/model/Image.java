@@ -4,8 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import tools.ImageDownloader;
 
 public class Image {
-    String title;
-    String url;
+    private String title;
+    private String url;
 
     public Image(@NotNull String title, @NotNull String url) throws Exception {
         this.title = title;

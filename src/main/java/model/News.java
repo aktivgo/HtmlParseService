@@ -20,7 +20,6 @@ public class News {
         }
     }
 
-
     public @NotNull String getTitle() {
         return title;
     }
